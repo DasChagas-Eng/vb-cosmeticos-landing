@@ -1,4 +1,5 @@
-node_modules/
-dist/
+# fonte fica em web/; a raiz do repo é o site publicado (GitHub Pages serve main:/)
+web/node_modules/
+web/dist/
 .DS_Store
 Thumbs.db
