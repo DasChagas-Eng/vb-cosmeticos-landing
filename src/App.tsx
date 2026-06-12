@@ -1,13 +1,23 @@
-import { useState, type CSSProperties, type ReactNode } from 'react';
+import { type CSSProperties, type ReactNode } from 'react';
 import { motion } from 'motion/react';
-import { Check, ChevronRight, Menu, Search, Sparkles } from 'lucide-react';
+import {
+  CalendarClock,
+  ChevronRight,
+  LayoutDashboard,
+  Menu,
+  Package,
+  PackagePlus,
+  ReceiptText,
+  ShoppingCart,
+  Sparkles,
+  Users,
+} from 'lucide-react';
 
 /* ════════════════════════════════════════════════════════
    VB COSMÉTICOS — landing page
    Dark, cinematográfica, glassy. React + Tailwind + motion.
 ════════════════════════════════════════════════════════ */
 
-const DEMO_URL = './app/';
 const GITHUB_URL =
   'https://github.com/DasChagas-Eng/prot-tipo-inicial-de-modelo-front-ilustrativo-para-CRM-';
 const VIDEO_URL =
@@ -33,11 +43,11 @@ function LogoVB({ className = 'w-8 h-8' }: { className?: string }) {
   return <img src="./logo-vb.svg" alt="" draggable={false} className={className} />;
 }
 
-function DemoButton({ label = 'Abrir a demo', full = false }: { label?: string; full?: boolean }) {
+function PrimaryButton({ label, href }: { label: string; href: string }) {
   return (
     <a
-      href={DEMO_URL}
-      className={`group inline-flex items-center justify-center gap-2 rounded-full bg-white text-black font-medium text-sm px-5 py-3 transition-all hover:bg-white/90 active:scale-[0.98] ${full ? 'w-full' : ''}`}
+      href={href}
+      className="group inline-flex items-center justify-center gap-2 rounded-full bg-white text-black font-medium text-sm px-5 py-3 transition-all hover:bg-white/90 active:scale-[0.98]"
     >
       <Sparkles className="w-4 h-4" />
       {label}
@@ -91,7 +101,7 @@ function Navbar() {
     { label: 'Produto', href: '#produto' },
     { label: 'Recursos', href: '#recursos' },
     { label: 'Assistente IA', href: '#ia' },
-    { label: 'Planos', href: '#planos' },
+    { label: 'Módulos', href: '#modulos' },
     { label: 'GitHub', href: GITHUB_URL, external: true },
   ];
   return (
@@ -120,7 +130,7 @@ function Navbar() {
         ))}
       </div>
       <div className="hidden md:block">
-        <DemoButton label="Abrir demo" />
+        <PrimaryButton label="Conhecer o sistema" href="#produto" />
       </div>
       <button
         aria-label="Abrir menu"
@@ -166,49 +176,16 @@ function Hero() {
         transition={{ duration: 0.7, delay: 0.7, ease: easeOut }}
         className="mt-10 flex flex-col items-center gap-3"
       >
-        <DemoButton />
+        <PrimaryButton label="Conhecer o sistema" href="#produto" />
         <span className="text-xs text-white/40">
-          Direto no navegador · sem cadastro · dados 100% simulados
+          Apresentação do protótipo · dados 100% simulados
         </span>
       </motion.div>
     </section>
   );
 }
 
-/* ── seção 3: barra de sistema (estilo macOS) ── */
-
-function SystemBar() {
-  const items = ['Dashboard', 'PDV', 'Clientes', 'Estoque', 'Fiscal', 'Ajuda'];
-  return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.6, delay: 0.9 }}
-      className="relative z-10 h-10 bg-black/40 backdrop-blur-md border-t border-b border-white/10"
-    >
-      <div className="max-w-6xl mx-auto px-6 h-full flex items-center justify-between text-xs">
-        <div className="flex items-center gap-4">
-          <LogoVB className="w-3.5 h-3.5" />
-          <span className="font-bold text-white">VB Cosméticos</span>
-          {items.map((item, i) => (
-            <span
-              key={item}
-              className={`text-white/60 ${i > 2 ? 'hidden sm:inline' : ''} ${i > 3 ? 'hidden md:inline' : ''}`}
-            >
-              {item}
-            </span>
-          ))}
-        </div>
-        <div className="flex items-center gap-3 text-white/60">
-          <Search className="w-3.5 h-3.5" />
-          <span>qua. 10 jun · 18:00</span>
-        </div>
-      </div>
-    </motion.div>
-  );
-}
-
-/* ── seção 4: showcase principal (MacBook) ── */
+/* ── seção 3: showcase principal (MacBook) ── */
 
 function Showcase() {
   return (
@@ -238,7 +215,7 @@ function Showcase() {
         />
         <figcaption className="absolute bottom-0 inset-x-0 px-6 py-4 text-xs text-white/50 bg-gradient-to-t from-black/70 to-transparent">
           O dashboard da VB em 10 de junho de 2026 — receita, vendas, ticket médio e
-          validade, ao vivo na demo.
+          radar de validade em uma única tela.
         </figcaption>
       </motion.figure>
     </section>
@@ -438,32 +415,73 @@ function ProcessSection() {
 
 function Modules() {
   const mods = [
-    'Dashboard',
-    'PDV',
-    'Produtos',
-    'Clientes',
-    'Entradas',
-    'Validade',
-    'NFC-e',
-    'Assistente IA',
+    {
+      icon: LayoutDashboard,
+      name: 'Dashboard',
+      desc: 'A loja inteira resumida em uma tela, em tempo real.',
+    },
+    {
+      icon: ShoppingCart,
+      name: 'PDV',
+      desc: 'Venda registrada em segundos, com desconto aplicado na hora.',
+    },
+    {
+      icon: Package,
+      name: 'Produtos',
+      desc: 'Catálogo completo com preço, custo, categoria e estoque.',
+    },
+    {
+      icon: Users,
+      name: 'Clientes',
+      desc: 'VIPs, leads e aniversariantes organizados pelo comportamento.',
+    },
+    {
+      icon: PackagePlus,
+      name: 'Entradas',
+      desc: 'Registro de compras e reposição de estoque sem planilha.',
+    },
+    {
+      icon: CalendarClock,
+      name: 'Validade',
+      desc: 'Radar de lotes que avisa antes de vencer na prateleira.',
+    },
+    {
+      icon: ReceiptText,
+      name: 'NFC-e',
+      desc: 'Emissão de nota fiscal de consumidor direto do balcão.',
+    },
+    {
+      icon: Sparkles,
+      name: 'Assistente IA',
+      desc: 'Perguntas em português, respostas com os dados da loja.',
+    },
   ];
   return (
-    <section className="relative z-10 max-w-6xl mx-auto px-6 py-16 md:py-20">
-      <p className="text-center text-xs uppercase tracking-widest text-white/40">
-        Tudo que a operação precisa, em oito módulos
-      </p>
-      <div className="mt-10 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-6">
+    <section id="modulos" className="relative z-10 max-w-6xl mx-auto px-6 py-20 md:py-28">
+      <Reveal className="text-center max-w-xl mx-auto">
+        <p className="text-xs uppercase tracking-widest text-white/40">Módulos</p>
+        <h2 className="mt-4 text-3xl md:text-5xl font-semibold tracking-tight leading-[1.02]">
+          Tudo que a operação
+          <br />
+          precisa, em oito módulos.
+        </h2>
+      </Reveal>
+      <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {mods.map((m, i) => (
-          <motion.span
-            key={m}
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: i * 0.05 }}
-            className="text-center text-sm font-semibold tracking-tight text-white/50 hover:text-white transition-colors"
+          <motion.div
+            key={m.name}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.6, delay: i * 0.06, ease: easeOut }}
+            className="liquid-glass group rounded-2xl p-6 transition-colors duration-300 hover:bg-white/[0.04]"
           >
-            {m}
-          </motion.span>
+            <span className="w-11 h-11 rounded-xl border border-white/10 bg-white/[0.04] flex items-center justify-center transition-colors duration-300 group-hover:border-[#00d2ff]/40">
+              <m.icon className="w-5 h-5 text-[#A4F4FD]" />
+            </span>
+            <h3 className="mt-5 text-sm font-semibold tracking-tight">{m.name}</h3>
+            <p className="mt-2 text-xs text-white/50 leading-[1.6]">{m.desc}</p>
+          </motion.div>
         ))}
       </div>
     </section>
@@ -520,135 +538,7 @@ function Testimonials() {
   );
 }
 
-/* ── seção 11: planos ── */
-
-type Plan = {
-  tier: string;
-  monthly: string;
-  yearly: string;
-  desc: string;
-  items: string[];
-  cta: string;
-  href?: string;
-  pro?: boolean;
-};
-
-function Pricing() {
-  const [yearly, setYearly] = useState(false);
-  const plans: Plan[] = [
-    {
-      tier: 'Demo',
-      monthly: 'Grátis',
-      yearly: 'Grátis',
-      desc: 'Para conhecer o sistema agora, com dados simulados.',
-      items: [
-        'Todos os módulos liberados',
-        'Um ano de dados de demonstração',
-        'Assistente IA em modo beta',
-        'Sem cadastro — direto no navegador',
-        'Código aberto no GitHub',
-      ],
-      cta: 'Abrir demo',
-      href: DEMO_URL,
-    },
-    {
-      tier: 'Loja',
-      monthly: 'R$ 99/mês',
-      yearly: 'R$ 990/ano',
-      desc: 'Para a operação diária de uma loja física.',
-      items: [
-        'Produtos e clientes ilimitados',
-        'PDV com emissão de NFC-e',
-        'Radar de validade e estoque mínimo',
-        'Notificações configuráveis',
-        'Suporte em horário comercial',
-      ],
-      cta: 'Escolher plano',
-    },
-    {
-      tier: 'Rede',
-      monthly: 'R$ 249/mês',
-      yearly: 'R$ 2.490/ano',
-      desc: 'Para redes, franquias e operações com mais de uma loja.',
-      items: [
-        'Lojas ilimitadas, visão consolidada',
-        'Assistente IA sem limites',
-        'Metas e comissões por vendedora',
-        'Campanhas de aniversário via WhatsApp',
-        'Suporte prioritário',
-      ],
-      cta: 'Falar com vendas',
-      pro: true,
-    },
-  ];
-
-  return (
-    <section id="planos" className="vb-pricing-section relative z-10">
-      {/* filtro de ruído do watermark */}
-      <svg className="absolute w-0 h-0" aria-hidden="true">
-        <filter id="vb-noise-pricing">
-          <feTurbulence type="fractalNoise" baseFrequency="0.5" numOctaves="2" stitchTiles="stitch" />
-          <feComponentTransfer>
-            <feFuncA type="linear" slope="0.075" />
-          </feComponentTransfer>
-          <feComposite in2="SourceGraphic" operator="in" result="noise" />
-          <feBlend in="SourceGraphic" in2="noise" mode="overlay" />
-        </filter>
-      </svg>
-
-      <div className="vb-watermark-container">
-        <div className="vb-watermark-main">
-          <span className="vb-watermark-line-1">Sua loja.</span>
-          <span className="vb-watermark-line-2">Reinventada</span>
-        </div>
-      </div>
-
-      <div className="vb-toggle-wrap">
-        <span className="text-sm text-white/70">Anual</span>
-        <button
-          type="button"
-          aria-pressed={yearly}
-          aria-label="Alternar cobrança anual"
-          className={`vb-toggle ${yearly ? 'active' : ''}`}
-          onClick={() => setYearly((v) => !v)}
-        >
-          <span className="vb-toggle-knob" />
-        </button>
-      </div>
-
-      <div className="vb-grid">
-        {plans.map((p) => (
-          <div key={p.tier} className={`vb-card ${p.pro ? 'vb-card-pro' : ''}`}>
-            <div className="vb-tier-small">{p.tier}</div>
-            <div className="vb-tier-large">{yearly ? p.yearly : p.monthly}</div>
-            <p className="vb-desc">{p.desc}</p>
-            <ul className="vb-list">
-              {p.items.map((item) => (
-                <li key={item}>
-                  <span className="vb-check">
-                    <Check className="w-3.5 h-3.5 text-white" />
-                  </span>
-                  {item}
-                </li>
-              ))}
-            </ul>
-            {p.href ? (
-              <a href={p.href} className="vb-btn inline-block text-center">
-                {p.cta}
-              </a>
-            ) : (
-              <button type="button" className="vb-btn">
-                {p.cta}
-              </button>
-            )}
-          </div>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-/* ── seção 12: CTA final ── */
+/* ── seção 11: CTA final ── */
 
 function FinalCta() {
   return (
@@ -674,11 +564,11 @@ function FinalCta() {
           Abra o painel.
         </h2>
         <p className="mt-6 text-white/60 max-w-md mx-auto text-sm leading-[1.6]">
-          O protótipo está no ar com um ano de operação simulada. Entre, clique,
-          venda — e veja o que a gestão da VB Cosméticos pode ser.
+          PDV, clientes, estoque com validade, NFC-e e assistente de IA — um
+          protótipo completo, construído de ponta a ponta com um ano de operação
+          simulada.
         </p>
         <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <DemoButton />
           <a
             href={GITHUB_URL}
             target="_blank"
@@ -708,9 +598,6 @@ function Footer() {
           Protótipo ilustrativo · dados 100% simulados · Vila Velha/ES · 2026
         </p>
         <nav className="flex gap-5 font-medium text-white/70">
-          <a href={DEMO_URL} className="hover:text-white transition-colors">
-            Demo
-          </a>
           <a
             href={GITHUB_URL}
             target="_blank"
@@ -772,7 +659,6 @@ export default function App() {
 
       <Navbar />
       <Hero />
-      <SystemBar />
       <Showcase />
       <DashboardSection />
       <AiSection />
@@ -780,7 +666,6 @@ export default function App() {
       <ProcessSection />
       <Modules />
       <Testimonials />
-      <Pricing />
       <FinalCta />
       <Footer />
     </div>
